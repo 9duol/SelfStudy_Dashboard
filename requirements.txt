@@ -1,0 +1,7 @@
+Flask
+numpy
+sounddevice
+scipy
+Pillow
+tkinter
+datetime
