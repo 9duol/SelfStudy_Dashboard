@@ -1,11 +1,10 @@
-
 ---
 
 # 自习看板 SelfStudy Dashboard
 
 > 一个专注于自习室管理的可视化大屏程序，具备噪音检测、倒计时提醒和课程表同步功能。
 
-[![License](https://img.shields.io/github/license/lic06/Selfstudy_boards)](https://github.com/lic06/Selfstudy_boards/blob/main/LICENSE)  
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)  
 [![Version](https://img.shields.io/badge/version-1.0.2-blue)](https://github.com/lic06/Selfstudy_boards/releases/tag/v1.0.2)
 
 ## 📌 简介
@@ -34,7 +33,7 @@
 | 音频处理        | sounddevice, numpy, scipy         |
 | 配置读取        | configparser                      |
 | 系统通知支持    | plyer                             |
-| 开源协议        | MIT License                       |
+| 开源协议        | GNU General Public License v3.0   |
 | 当前版本号      | 1.0.2                             |
 
 ---
@@ -57,19 +56,20 @@ cd Selfstudy_boards
 ### 启动程序
 
 ```bash
-python SelfStudyDashboard.py
+python main.py
 ```
 
 ---
 
 ## ⚙️ 配置说明
 
-在项目根目录创建或修改 `schedule.ini` 文件以定义课程时间表：
+在项目根目录创建或修改 `schedule.json` 文件以定义课程时间表：
 
-```ini
-[Schedule]
-period1 = 1140-1230   # 对应 19:00 - 20:30
-period2 = 1245-1310   # 对应 20:45 - 21:50
+```json
+[
+  {"name": "第一节", "start": 1140, "end": 1230},
+  {"name": "第二节", "start": 1245, "end": 1310}
+]
 ```
 
 > 时间格式为整数分钟数，格式为 `起始分钟-结束分钟`，例如：
@@ -90,21 +90,21 @@ period2 = 1245-1310   # 对应 20:45 - 21:50
 
 #### 使用方法：
 
-进入设置 → 基准线校准 → 分别点击“校准最小基准线”和“校准最大基准线”
+进入设置 → 基准线校准 → 分别点击"校准最小基准线"和"校准最大基准线"
 
 ---
 
 ### ⏳ 倒计时提醒
 
 - 根据当前时间匹配课程时间段
-- 显示“距离时间段 N 结束还剩 X 分钟”
-- 若无活动，则显示“无活动”
+- 显示"距离时间段 N 结束还剩 X 分钟"
+- 若无活动，则显示"无活动"
 
 ---
 
 ### 🎨 深色/浅色模式切换
 
-点击设置窗口中的“切换深浅色模式”，即可切换整体界面配色风格。
+点击设置窗口中的"切换深浅色模式"，即可切换整体界面配色风格。
 
 ---
 
@@ -123,30 +123,19 @@ period2 = 1245-1310   # 对应 20:45 - 21:50
 
 ## 🧩 程序结构
 
-本项目由两个核心类组成：
+本项目由多个模块组成：
 
-### [NoiseDetector](SelfStudyDashboard.py#L12-L92)
+### 主要模块：
 
-负责音频流监听、噪音计算与校准。
-
-#### 方法概览：
-
-- [calculate_db(audio_data)](file://c:\Users\梁立德\Desktop\项目文件夹\main.py#L21-L36) 计算当前音频的分贝值
-- [calibrate_min_baseline()](file://c:\Users\梁立德\Desktop\项目文件夹\main.py#L38-L44) 校准静音基准线
-- [calibrate_max_baseline()](file://c:\Users\梁立德\Desktop\项目文件夹\main.py#L46-L68) 播放参考音频并校准最大基准线
-- [start()/stop()](file://c:\Users\梁立德\Desktop\项目文件夹\main.py#L76-L86) 控制音频流开启与关闭
-
-### [SchoolDashboard](SelfStudyDashboard.py#L95-L469)
-
-负责主界面构建与事件驱动控制。
-
-#### 主要模块：
-
-- 初始化 UI 组件（标题、时间、噪音条、倒计时等）
-- 异步加载课程表配置
-- 更新时间与噪音数据
-- 控制最小化/恢复窗口
-- 打开设置窗口与关于页面
+- [main.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/main.py) - 程序入口点
+- [ui.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/ui.py) - 主界面和启动画面
+- [noise_detector.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/noise_detector.py) - 噪音检测核心逻辑
+- [settings_window.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/settings_window.py) - 设置窗口
+- [about_window.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/about_window.py) - 关于窗口
+- [activity_configurator.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/activity_configurator.py) - 活动配置器
+- [config_loader.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/config_loader.py) - 配置加载器
+- [shortcut.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/shortcut.py) - 快捷方式创建工具
+- [readme_viewer.py](file://c:/Users/%E6%A2%81%E7%AB%8B%E5%BE%B7/Desktop/%E8%87%AA%E4%B9%A0%E7%9C%8B%E6%9D%BF%E9%87%8D%E6%9E%84/readme_viewer.py) - README查看器
 
 ---
 
@@ -154,8 +143,16 @@ period2 = 1245-1310   # 对应 20:45 - 21:50
 
 ```
 Selfstudy_boards/
-├── SelfStudyDashboard.py       # 主程序入口
-├── schedule.ini                # 课程时间表配置文件
+├── main.py                     # 程序入口
+├── ui.py                       # 主界面UI
+├── noise_detector.py           # 噪音检测模块
+├── settings_window.py          # 设置窗口
+├── about_window.py             # 关于窗口
+├── activity_configurator.py    # 活动配置器
+├── config_loader.py            # 配置加载器
+├── shortcut.py                 # 快捷方式创建工具
+├── readme_viewer.py            # README查看器
+├── schedule.json               # 课程时间表配置文件
 ├── README.md                   # 本文件
 └── screenshot.png              # 可选：运行截图
 ```
@@ -166,7 +163,7 @@ Selfstudy_boards/
 
 - macOS 用户首次运行可能需要授权访问麦克风。
 - Windows 用户需确保隐私设置中允许应用使用麦克风。
-- 初次使用建议进行一次完整的“最小/最大”基准线校准以提高准确性。
+- 初次使用建议进行一次完整的"最小/最大"基准线校准以提高准确性。
 - 程序最小化后120秒自动恢复，可避免误操作关闭。
 
 ---
@@ -202,9 +199,20 @@ Selfstudy_boards/
 
 ## 📄 开源许可
 
-MIT License
+GNU General Public License v3.0
 
-你可以自由地使用、复制、修改、合并、出版发行、再授权及销售本项目的副本，但必须包含原始版权声明。
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 ---
 
