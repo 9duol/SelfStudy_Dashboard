@@ -2,7 +2,7 @@
 
 # 自习看板 SelfStudy Dashboard
 
-> 一个专注于自习室管理的可视化大屏程序，具备噪音检测、倒计时提醒和课程表同步功能。
+#> 一个专注于自习室管理的可视化大屏程序，具备噪音检测、倒计时提醒和课程表同步功能。
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)  
 [![Version](https://img.shields.io/badge/version-1.0.2-blue)](https://github.com/lic06/Selfstudy_boards/releases/tag/v1.0.2)
